@@ -1,0 +1,18 @@
+
+   
+
+.gradient-custom-2{
+    background-image: url(https://img.freepik.com/free-photo/person-surfing-flying-parachute-same-time-kitesurfing-bonaire-caribbean_181624-11389.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 5px;
+}
+
+.my-container{
+    background-color: #3CBBB1;
+    height: 100vh;
+}
+
+
+    
