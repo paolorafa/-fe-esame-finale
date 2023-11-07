@@ -4,11 +4,14 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import {useFetch} from "../../hooks/useFetch";
 
+
+
 function FormCreateCard() {
   const [selectCatecory, setSelectCategory] = useState("");
   const [file, setFile] = useState(null);
   const { data } = useFetch(`${process.env.REACT_APP_URL}/category`);
-  console.log(data);
+
+
 
   const [product, setProduct] = useState({
     nameProduct: "",
@@ -18,7 +21,6 @@ function FormCreateCard() {
     image: "",
     quantity: Number,
   });
-  console.log(selectCatecory);
 
   const handleInputChanged = (e) => {
     const { name, value } = e.target;
@@ -172,7 +174,24 @@ function FormCreateCard() {
         <Button type="submit" className="center">
           Inserisci prodotto
         </Button>
+
+       
       </form>
+      {/* <div>
+        {isLoading && <Spinner />}
+
+        {!isLoading && data && data.category &&
+          data.category.map((element) => {
+            return (
+              <CardCategory
+                key={nanoid()}
+                category={element.category}
+                _id={element._id}
+              />
+            );
+          })}
+      </div> */}
+      
     </>
   );
 }

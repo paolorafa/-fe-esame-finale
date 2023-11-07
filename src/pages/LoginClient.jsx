@@ -1,64 +1,54 @@
-import React, { useState} from "react";
-import { useNavigate} from "react-router-dom";
-import "./loginProvider.css";
-import { Link } from "react-router-dom";
+import React, {useState} from 'react'
+import {useNavigate, Link} from 'react-router-dom'
 
+function LoginClient() {
 
-
-
-function LoginProvider() {
-  const [loginProvider, setLoginProvider] = useState({});
+    const [loginClient, setLoginClient] = useState({});
  
-  const navigate = useNavigate();
-
-
-
-  const handleInputChanged = (e) => {
-    const { name, value } = e.target;
-
-    setLoginProvider({
-      ...loginProvider,
-      [name]: value,
-    });
-  };
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_URL}/loginprovider`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: "POST",
-          body: JSON.stringify(loginProvider),
+    const navigate = useNavigate();
+  
+  
+  
+    const handleInputChanged = (e) => {
+      const { name, value } = e.target;
+  
+      setLoginClient({
+        ...loginClient,
+        [name]: value,
+      });
+    };
+  
+    const onSubmit = async (e) => {
+      e.preventDefault();
+  
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_URL}/loginclient`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            method: "POST",
+            body: JSON.stringify(loginClient),
+          }
+        );
+        const data = await response.json();
+  
+        if (data.token) {
+          localStorage.setItem("userToken", data.token);
+          navigate("/home/client");
         }
-      );
-      const data = await response.json();
-
-      if (data.token) {
-        localStorage.setItem("userToken", data.token);
-        navigate("/home");
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    };
+  
 
-  const redirectForLoginWithGitHub = () => {
-    window.location.href = `${process.env.REACT_APP_URL}/auth/github`;
-    
-};
-
-
-
-    
 
   return (
     <>
-      <section className="gradient-form my-container">
+    
+    <section className="gradient-form my-container">
         <div className="container py-5 h-100">
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col-xl-10">
@@ -68,7 +58,7 @@ function LoginProvider() {
                     <div class="card-body p-md-5 mx-md-4">
                       <div className="text-center ">
                         <h4 className="mt-1 mb-5 pb-1">
-                          We are The Lotus Team
+                          Registrazione Cliente
                         </h4>
                       </div>
 
@@ -115,14 +105,6 @@ function LoginProvider() {
                             Forgot password?
                           </a>
                         </div>
-                        <div className="text-center pt-1 mb-5 pb-1">
-                          <button
-                            onClick={() => redirectForLoginWithGitHub()}
-                            className="btn btn-primary btn-block fa-lg mb-3"
-                          >
-                            Entra con Github
-                          </button>
-                        </div>
 
                         <div className="d-flex align-items-center justify-content-center pb-4">
                           <p className="mb-0 me-2">Don't have an account?</p>
@@ -132,7 +114,7 @@ function LoginProvider() {
                             type="button"
                             className="btn btn-outline-danger"
                           >
-                             <Link to="/providers/create">Create new</Link>
+                             <Link to="/client/create">Create new</Link>
                           </button>
                         </div>
                       </form>
@@ -156,7 +138,10 @@ function LoginProvider() {
           </div>
         </div>
       </section>
+    
+    
     </>
-  );
+  )
 }
-export default LoginProvider;
+
+export default LoginClient

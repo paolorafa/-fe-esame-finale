@@ -1,7 +1,7 @@
 import React from 'react'
 import LayoutDeveloper from '../componentsDev/layoutDeveloper/LayoutDeveloper'
 
-function Home() {
+function HomeDeveloper() {
   return (
     <>
         <LayoutDeveloper/>
@@ -9,4 +9,4 @@ function Home() {
   )
 }
 
-export default Home
+export default HomeDeveloper
