@@ -1,0 +1,16 @@
+.my-login {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    background-color: blue;
+  }
+  
+  .my-login img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    transition: transform 1s;
+  }
+  

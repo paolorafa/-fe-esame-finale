@@ -7,7 +7,7 @@ function NotfoudPage() {
       <h1>La pagina non esiste </h1>
 
       <button>
-        <Link to={"/"}>torna alla Home</Link>
+        <Link to={"/home/client"}>torna alla Home</Link>
       </button>
     </div>
   );

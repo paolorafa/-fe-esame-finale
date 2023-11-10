@@ -21,6 +21,7 @@ function FormCreateCard() {
     image: "",
     quantity: Number,
   });
+ 
 
   const handleInputChanged = (e) => {
     const { name, value } = e.target;
@@ -37,7 +38,7 @@ function FormCreateCard() {
 
   const handleCategoryChanged = (e) => {
     setSelectCategory(e.target.value);
-    console.log(e.target.value);
+  
   };
 
   const onSubmit = async (e) => {
@@ -177,20 +178,6 @@ function FormCreateCard() {
 
        
       </form>
-      {/* <div>
-        {isLoading && <Spinner />}
-
-        {!isLoading && data && data.category &&
-          data.category.map((element) => {
-            return (
-              <CardCategory
-                key={nanoid()}
-                category={element.category}
-                _id={element._id}
-              />
-            );
-          })}
-      </div> */}
       
     </>
   );

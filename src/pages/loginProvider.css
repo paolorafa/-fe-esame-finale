@@ -1,7 +1,13 @@
-
+.gradient-custom-client{
+    background-image: url(https://img.freepik.com/free-photo/biometric-technology-background-with-fingerprint-scanning-system-virtual-screen-digital-remix_53876-104197.jpg?w=1380&t=st=1699451973~exp=1699452573~hmac=528278a132300e798132f5c18b545acd0b9f3a75901e4e8d7314676756e1ae4f);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 5px;
+}
    
 
-.gradient-custom-2{
+.gradient-custom-provider{
     background-image: url(https://img.freepik.com/free-photo/person-surfing-flying-parachute-same-time-kitesurfing-bonaire-caribbean_181624-11389.jpg);
     background-position: center;
     background-repeat: no-repeat;

@@ -4,6 +4,7 @@ import {useNavigate, Link} from 'react-router-dom'
 function LoginClient() {
 
     const [loginClient, setLoginClient] = useState({});
+   
  
     const navigate = useNavigate();
   
@@ -33,15 +34,17 @@ function LoginClient() {
           }
         );
         const data = await response.json();
-  
+          
         if (data.token) {
           localStorage.setItem("userToken", data.token);
           navigate("/home/client");
+         
         }
       } catch (error) {
         console.log(error);
       }
     };
+   
   
 
 
@@ -118,9 +121,10 @@ function LoginClient() {
                           </button>
                         </div>
                       </form>
+                     
                     </div>
                   </div>
-                  <div className="col-lg-6 d-flex align-items-center gradient-custom-2">
+                  <div className="col-lg-6 d-flex align-items-center gradient-custom-client">
                     <div className="text-white px-3 py-4 p-md-5 mx-md-4">
                       <h4 className="mb-4">We are more than just a company</h4>
                       <p className="small mb-0">

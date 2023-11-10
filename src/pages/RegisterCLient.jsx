@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+
 function RegisterCLient() {
   const [registerClient, setRegisterClient] = useState({});
   const [file, setFile] = useState(null);
   const [dataClient, setDataClient] = useState([]);
+  const [verifyClient, setVerifyClient] = useState(false)
 
   const navigate = useNavigate();
-  console.log(registerClient);
 
   const handleInputChanged = (e) => {
     const { name, value } = e.target;
@@ -18,8 +19,11 @@ function RegisterCLient() {
     });
   };
   const handleChangedFile = (e) => {
+    
     setFile(e.target.files[0]);
     console.log(e.target.files);
+   
+    
   };
   const uploadFile = async (image) => {
     const fileImage = new FormData();
@@ -54,6 +58,8 @@ function RegisterCLient() {
 
             image: fileUpload.image,
           };
+         
+         
 
           const response = await fetch(
             `${process.env.REACT_APP_URL}/client/create`,
@@ -69,6 +75,7 @@ function RegisterCLient() {
             const responseData = await response.json();
             console.log(responseData.client);
             setDataClient(responseData);
+            setVerifyClient(true)
            
             
           } else {
@@ -176,10 +183,15 @@ function RegisterCLient() {
                         Registrati
                       </button>
                     </form>
+                    {verifyClient && (
+                        <p style={{ color: "green" }}>
+                          Registrazione completata con successo!
+                        </p>
+                      )}
                   </div>
                 </div>
 
-                <div className="col-lg-6 d-flex align-items-center gradient-custom-2">
+                <div className="col-lg-6 d-flex align-items-center gradient-custom-client">
                   <div className="text-white px-3 py-4 p-md-5 mx-md-4">
                     <h4 className="mb-4">We are more than just a company</h4>
                     <p className="small mb-0">

@@ -68,7 +68,7 @@ function LoginProvider() {
                     <div class="card-body p-md-5 mx-md-4">
                       <div className="text-center ">
                         <h4 className="mt-1 mb-5 pb-1">
-                          We are The Lotus Team
+                         Registrazione Provider
                         </h4>
                       </div>
 
@@ -138,7 +138,7 @@ function LoginProvider() {
                       </form>
                     </div>
                   </div>
-                  <div className="col-lg-6 d-flex align-items-center gradient-custom-2">
+                  <div className="col-lg-6 d-flex align-items-center gradient-custom-provider">
                     <div className="text-white px-3 py-4 p-md-5 mx-md-4">
                       <h4 className="mb-4">We are more than just a company</h4>
                       <p className="small mb-0">

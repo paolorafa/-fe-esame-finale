@@ -1,7 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import "./navigation.css"
+import { jwtDecode } from "jwt-decode";
+
 
 function Navigation() {
+
+  const [imageUrl, setImageUrl]= useState("")
+  const [token, setToken] =  useState("")
+
+
+  useEffect(()=>{
+    const tokenStorage = localStorage.getItem("userToken");
+    setToken(tokenStorage)
+     if(tokenStorage){
+       const decodeToken = jwtDecode(tokenStorage)
+    
+    const image = decodeToken.image
+    setImageUrl(image)
+     }
+  }, [token])
+
+  
+   
+    
+
+ 
+
   return (
     <>
       <header>
@@ -11,6 +36,7 @@ function Navigation() {
               <div className="col-lg-2 col-sm-4 col-6">
                   <img
                     src="https://www.mc4season.it/index_files/small-1452.png"
+                    alt =" logo"
                     height="50"
                   />
                 
@@ -18,10 +44,17 @@ function Navigation() {
 
                <div className="order-lg-last col-lg-2 col-sm-8 col-6">
                 <div className="d-flex float-end">
-                  <button className="btn btn-secondary shadow-0 text-white">
-                    
-                    <Link to={'/client/login'} className="text-white">Sign In</Link>
-                  </button>
+                  <div className="my-login">
+                      
+                     
+                      <Link to={'/client/login'} className="text-white">
+                        
+                        <img src={imageUrl} alt=" login"/>
+                        
+                        
+                        </Link>
+                  </div>
+                  
                 </div>
               </div> 
 

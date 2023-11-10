@@ -1,15 +1,32 @@
-import React from "react";
+import React, {useEffect, useState,useContext} from "react";
+import {BsBasket} from 'react-icons/bs'
+import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useFetch } from "../../hooks/useFetch";
+
 
 function NavLink() {
+
+  const { id} = useParams();
+  
+
+  const { isLoading, data } = useFetch(
+    `${process.env.REACT_APP_URL}/category`
+  );
+  
+console.log(data);
+
+
+
   return (
     <>
       <nav
-        class="navbar navbar-expand-md bg-dark sticky-top border-bottom"
+        className="navbar navbar-expand-md bg-dark sticky-top border-bottom"
         data-bs-theme="dark"
       >
-        <div class="container">
+        <div className="container">
           <button
-            class="navbar-toggler"
+            className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarNavDropdown"
@@ -17,24 +34,31 @@ function NavLink() {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span class="navbar-toggler-icon"></span>
+            <span className="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <div className="collapse navbar-collapse" id="navbarNavDropdown">
             
-            <div class="offcanvas-body">
-              <ul class="navbar-nav flex-grow-1 justify-content-center">
-                <li class="nav-item">
-                  <a class="nav-link" href={`/home/client`}>
+            <div className="offcanvas-body">
+              <ul className="navbar-nav flex-grow-1 justify-content-center">
+                <li className="nav-item">
+                  <a className="nav-link" href={`/home/client`}>
                     Home
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href={`/category/vele`}>
+                <li className="nav-item">
+
+                  <a className="nav-link" href={`category/${id}`} >
                     Vele
                   </a>
                 </li>
               </ul>
             </div>
+          </div>
+          <div className="text-white">
+            <Link to={'/basket'} className="text-white">
+              <BsBasket/>
+            </Link>
+            
           </div>
         </div>
       </nav>

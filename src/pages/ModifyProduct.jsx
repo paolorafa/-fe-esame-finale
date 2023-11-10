@@ -6,18 +6,22 @@ import { useFetch } from "../hooks/useFetch";
 import { useParams, useNavigate } from "react-router-dom";
 function ModifyProduct() {
   const [selectCatecory, setSelectCategory] = useState("");
+
   const [product, setProduct] = useState({
     nameProduct: "",
     description: "",
-    price: 0,
+    price: Number,
     category: selectCatecory,
     image: "",
-    quantity: 0,
+    quantity: Number,
   });
+  console.log(product);
+
   const [file, setFile] = useState(null);
   const { data } = useFetch(`${process.env.REACT_APP_URL}/category`);
-  const {_id} = useParams()
-  const navigate = useNavigate()
+  const { id } = useParams();
+  console.log(id);
+  const navigate = useNavigate();
 
   const handleInputChanged = (e) => {
     const { name, value } = e.target;
@@ -27,6 +31,8 @@ function ModifyProduct() {
       [name]: value,
     });
   };
+
+  console.log(product);
   const handleCategoryChanged = (e) => {
     setSelectCategory(e.target.value);
     console.log(e.target.value);
@@ -34,118 +40,66 @@ function ModifyProduct() {
   const handleChangedFile = (e) => {
     setFile(e.target.files[0]);
   };
-//   const uploadFile = async (image) => {
-//     const fileImage = new FormData();
-//     fileImage.append("image", image);
-//     try {
-//       const response = await fetch(
-//         `${process.env.REACT_APP_URL}/products/cloudUpload`,
-//         {
-//           method: "POST",
-//           body: fileImage,
-//         }
-//       );
-//       console.log(fileImage);
-//       if (!response.ok) {
-//         throw Error("Errore durante upload");
-//       }
-//       return await response.json();
-//     } catch (e) {
-//       console.log(e);
-//       return null;
-//     }
-//   };
+  //   const uploadFile = async (image) => {
+  //     const fileImage = new FormData();
+  //     fileImage.append("image", image);
+  //     try {
+  //       const response = await fetch(
+  //         `${process.env.REACT_APP_URL}/products/cloudUpload`,
+  //         {
+  //           method: "POST",
+  //           body: fileImage,
+  //         }
+  //       );
+  //       console.log(fileImage);
+  //       if (!response.ok) {
+  //         throw Error("Errore durante upload");
+  //       }
+  //       return await response.json();
+  //     } catch (e) {
+  //       console.log(e);
+  //       return null;
+  //     }
+  //   };
 
-  const modifyProduct = async (updatedProductData) => {
+  const onSubmit = async () => {
+    
     try {
-      const response = await fetch(`${process.env.REACT_APP_URL}/products/update/${_id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedProductData),
-      });
-  
+      const response = await fetch(
+        `${process.env.REACT_APP_URL}/products/update/${id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(product),
+        }
+      );
+      console.log(response);
+
       if (!response.ok) {
         throw new Error("Errore durante la modifica del prodotto");
       }
-  
+
       const updatedProduct = await response.json();
       console.log(updatedProduct);
-      return updatedProduct;
+      
     } catch (error) {
-      console.error("Si è verificato un errore durante la modifica del prodotto:", error);
+      console.error(
+        "Si è verificato un errore durante la modifica del prodotto:",
+        error
+      );
       return null;
     }
   };
-  const onSubmit = async (e) => {
-    e.preventDefault();
-  
-    // Ottieni i dati aggiornati del prodotto
-    const updatedProductData = {
-      nameProduct: product.nameProduct,
-      description: product.description,
-      price: product.price,
-      category: selectCatecory,
-      image: product.image,
-      quantity: product.quantity,
-    };
-  
-    try {
-      const updatedProduct = await modifyProduct(_id, updatedProductData);
-  
-      if (updatedProduct) {
-       
-        console.log("Prodotto modificato con successo:", updatedProduct);
-        navigate(`/home`);
-      } else {
-        
-        console.log("Errore durante la modifica del prodotto");
-      }
-    } catch (error) {
-      
-      console.error("Si è verificato un errore durante la modifica del prodotto:", error);
-    }
-  };
-  
-  
-  useEffect(() => {
-   
-    const fetchProductDetails = async () => {
-      try {
-        const response = await fetch(`${process.env.REACT_APP_URL}/products/${_id}`)
-        
-        console.log(response);
-        if (!response.ok) {
-          throw new Error("Errore durante il recupero dei dettagli del prodotto");
-        }
-        const productData = await response.json();
-        console.log(productData);
-        setProduct({
-          nameProduct: productData.nameProduct || "",
-          description: productData.description || "",
-          price: productData.price || "",
-          category: productData.category || "",
-          image: productData.image || "",
-          quantity: productData.quantity || "",
-        });
-        setSelectCategory(productData.category || ""); // 
-      } catch (error) {
-        console.error("Si è verificato un errore durante il recupero dei dettagli del prodotto:", error);
-      }
-    };
 
-    fetchProductDetails();
-  }, [_id]);
-  
   return (
     <>
       <div className="container">
-        <form enctype="multipart/form-data" onSubmit={onSubmit}>
+        <form  onSubmit={onSubmit}>
           <Row className="mb-3">
             <Form.Label className="fw-bolder">Nome Prodotto</Form.Label>
             <Form.Control
-              
               type="text"
               name="nameProduct"
               placeholder="name product"
@@ -154,7 +108,6 @@ function ModifyProduct() {
 
             <Form.Label className="fw-bolder">Descrizione</Form.Label>
             <textarea
-            
               type="text"
               name="description"
               placeholder="description"
@@ -207,7 +160,7 @@ function ModifyProduct() {
           </Row>
 
           <Button type="submit" className="center">
-            Inserisci prodotto
+            Modifica prodotto
           </Button>
         </form>
       </div>
