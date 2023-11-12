@@ -1,14 +1,16 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import {useNavigate, Link} from 'react-router-dom'
+import Modal from '../componentsClient/modal/Modal';
+import { ContextElement } from "../componentsClient/contex/Contex";
 
 function LoginClient() {
 
+  const { modalBasket , modal } =
+  useContext(ContextElement);
+
     const [loginClient, setLoginClient] = useState({});
-   
- 
     const navigate = useNavigate();
-  
-  
+    
   
     const handleInputChanged = (e) => {
       const { name, value } = e.target;
@@ -39,6 +41,9 @@ function LoginClient() {
           localStorage.setItem("userToken", data.token);
           navigate("/home/client");
          
+        } else if(data.error){
+          console.log('errore durante il login');
+         modal()
         }
       } catch (error) {
         console.log(error);
@@ -121,6 +126,7 @@ function LoginClient() {
                           </button>
                         </div>
                       </form>
+                      {modalBasket && <Modal message={'login o password errati'}/>}
                      
                     </div>
                   </div>

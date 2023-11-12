@@ -37,7 +37,7 @@ function TableForProduct({
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr className="text-center align-middle">
             <td>{nameProduct}</td>
             <td>{description}</td>
             <td>{price}</td>

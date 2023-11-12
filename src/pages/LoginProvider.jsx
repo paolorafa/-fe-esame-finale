@@ -40,8 +40,9 @@ function LoginProvider() {
 
       if (data.token) {
         localStorage.setItem("userToken", data.token);
-        navigate("/home");
+        
       }
+      navigate("/home");
     } catch (error) {
       console.log(error);
     }

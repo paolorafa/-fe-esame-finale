@@ -1,32 +1,35 @@
-import React from "react";
-import NavLink from "../componentsClient/navLink/NavLink";
-import Navigation from "../componentsClient/navbar/Navigation";
+import React, {useContext, useEffect} from "react";
 import { useParams } from "react-router-dom";
-import { useFetch } from "../hooks/useFetch";
 import Spinner from "react-bootstrap/esm/Spinner";
-import Footer from "../componentsClient/footerEcommerce/Footer";
+import { ContextElement } from "../componentsClient/contex/Contex";
+
 
 function ProductDetails() {
-  const { _id } = useParams();
+  const { id } = useParams();
+console.log(id);
+  
+  const { setId, loading, product} =
+  useContext(ContextElement);
+  console.log(product);
 
-  const { isLoading, data } = useFetch(
-    `${process.env.REACT_APP_URL}/products/${_id}`
-  );
-  console.log(data);
+  
+  useEffect(() => {
+    // Chiamare setId con l'ID ottenuto dai parametri
+    setId(id);
+  }, [setId, id]);
 
   return (
     <>
-      <Navigation />
-      <NavLink />
+    
       <section className="py-5">
         <div className="container">
           <div className="row gx-5">
             <div className="col-lg-6">
-              {isLoading && <Spinner />}
-              {!isLoading && data && (
+              {loading && <Spinner />}
+              {!loading  && product && (
                 <div className="border rounded-4 mb-3 d-flex justify-content-center">
                   <img
-                    src={data.product.image}
+                    src={product.product.image}
                     alt=""
                     style={{
                       maxWidth: "100%",
@@ -41,7 +44,7 @@ function ProductDetails() {
             <main className="col-lg-6">
               <div className="ps-lg-3">
                 <h4 className="title text-dark">
-                  {!isLoading && data ? data.product.nameProduct : ""}
+                  {!loading && product ? product.product.nameProduct : ""}
                 </h4>
                 <div className="d-flex flex-row my-3">
                   <div className="text-warning mb-1 me-2">
@@ -59,16 +62,19 @@ function ProductDetails() {
                 </div>
                 <div class="mb-3">
                   <span class="h2">
-                    €{!isLoading && data ? data.product.price : ""}
+                    €{!loading && product ? product.product.price : ""}
                   </span>
                 </div>
-                <p className="h3">{!isLoading && data ? data.product.description : ""}</p>
+                <p className="h3">{!loading && product ? product.product.description : ""}</p>
               </div>
             </main>
           </div>
         </div>
       </section>
-      <Footer/>
+     
+     
+ 
+      
     </>
   );
 }

@@ -1,0 +1,17 @@
+
+
+.my-photo{
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    border-color: black;
+    border: 2px solid;
+    transform: translate(500px, 180px);
+}
+
+.my-box{
+    width: 100%;
+    height: 30vh;
+    
+    position: relative;
+}

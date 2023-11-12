@@ -9,7 +9,7 @@ export const LoginSucces = () => {
     
 
     useEffect(() => {
-        // Salva l'ID nell'LocalStorage quando il componente si monta
+      
         if(token){
             localStorage.setItem('userToken', token);
         navigate('/home') 

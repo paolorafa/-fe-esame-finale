@@ -33,7 +33,7 @@ function RegisterCLient() {
         `${process.env.REACT_APP_URL}/client/cloudUpload`,
         {
           method: "POST",
-          body: fileImage,
+          body: fileImage
         }
       );
       console.log(fileImage);
@@ -94,7 +94,7 @@ function RegisterCLient() {
 
   useEffect(() => {
     if (dataClient && dataClient.client) {
-      navigate("/home/client");
+      navigate("/client/login");
     }
   }, [dataClient]);
 

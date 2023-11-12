@@ -3,37 +3,39 @@ import { useNavigate } from "react-router-dom";
 
 function RegisterDeveloper() {
   const [file, setFile] = useState(null);
+  const [code, setCode] = useState(false);
+  const [showSecretCodeInput, setShowSecretCodeInput] = useState(true);
   const [registerProvider, setRegisterProvider] = useState({});
   console.log(registerProvider);
 
-  
   const navigate = useNavigate();
 
-  // const onSubmitSecretCode = async (e) => {
-  //   e.preventDefault();
+  const onSubmitSecretCode = async (e) => {
+    e.preventDefault();
 
-  //   try {
-  //     const response = await fetch(`${process.env.REACT_APP_URL}/verifycode`, {
-  //       headers: {
-  //         "content-type": "application/json",
-  //       },
-  //       method: "POST",
-  //       body: JSON.stringify(registerProvider),
-  //     });
-  //     if (response && response.ok) {
-  //       const data = await response.json();
-  //       setRegisterProvider(data);
-  //       setCode(true);
-  //       setShowSecretCodeInput(false);
-  //       if (data.token) {
-  //         localStorage.setItem("userToken", data.token);
-  //         navigate("/home");
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.log(e);
-  //   }
-  // };
+    try {
+      const response = await fetch(`${process.env.REACT_APP_URL}/verifycode`, {
+        headers: {
+          "content-type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify(registerProvider),
+      });
+      if (response && response.ok) {
+        const data = await response.json();
+        setRegisterProvider(data);
+        setCode(true);
+        setShowSecretCodeInput(false);
+        if (data && data.token && data.token !== "") {
+          localStorage.setItem("userToken", data.token);
+          console.log("userToken impostato:", data.token);
+        }
+        navigate("/home");
+      }
+    } catch (error) {
+      console.log(e);
+    }
+  };
 
   const handleInputChanged = (e) => {
     const { name, value } = e.target;
@@ -67,7 +69,6 @@ function RegisterDeveloper() {
       return await response.json();
     } catch (e) {
       console.log(e);
-      
     }
   };
   const onSubmit = async (e) => {
@@ -223,7 +224,7 @@ function RegisterDeveloper() {
                       </button>
                     </form>
 
-                    {/* {showSecretCodeInput && !code && (
+                    {showSecretCodeInput && !code && (
                       <div className="col-md-6">
                         <form onSubmit={onSubmitSecretCode}>
                           <input
@@ -246,7 +247,7 @@ function RegisterDeveloper() {
                       <p style={{ color: "green" }}>
                         Registrazione completata con successo!
                       </p>
-                    )} */}
+                    )}
                   </div>
                 </div>
 

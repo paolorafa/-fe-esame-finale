@@ -7,13 +7,20 @@ import Spinners from "react-bootstrap/esm/Spinner";
 import { nanoid } from "nanoid";
 import Sidebar from "../sidebar/Sidebar";
 import { useNavigate } from "react-router-dom";
+import ResponsivePagination from "react-responsive-pagination";
 
 function LayoutDeveloper() {
   const { data, isLoading } = useFetch(`${process.env.REACT_APP_URL}/products`);
+  const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
+  
 
   const handleSelectProductForEdit = (productId) => {
     navigate(`/products/update/${productId}`);
+  };
+
+  const hadlePagination = (value) => {
+    setCurrentPage(value);
   };
 
   const delectProduct = async (_id) => {
@@ -77,6 +84,11 @@ function LayoutDeveloper() {
                 );
               })}
           </div>
+          <ResponsivePagination
+            current={currentPage}
+            total={data && data.totalPage}
+            onPageChange={hadlePagination}
+          />
         </div>
       </section>
     </>

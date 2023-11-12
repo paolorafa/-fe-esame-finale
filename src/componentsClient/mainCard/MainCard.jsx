@@ -1,16 +1,14 @@
 import React, { useContext } from "react";
-import { useFetch } from "../../hooks/useFetch";
 import Spinners from "react-bootstrap/esm/Spinner";
 import CardProduct from "../cardProduct/CardProduct";
 import { nanoid } from "nanoid";
-import {ContextBasket} from '../contex/CBasket'
-
+import { ContextElement } from "../contex/Contex";
+import ModalBasket from "../modal/Modal";
 
 function MainCard() {
-  const { data, isLoading } = useFetch(`${process.env.REACT_APP_URL}/products`);
-  const {updateProductBasket} =  useContext(ContextBasket)
-
-
+  const { updateProductBasket, product, loading, productSearch, modalBasket } =
+    useContext(ContextElement);
+ 
 
   const addBasketProduct = async (_id) => {
     try {
@@ -18,29 +16,23 @@ function MainCard() {
         `${process.env.REACT_APP_URL}/products/${_id}`
       );
       const dataProductBascket = await response.json();
-      
-      console.log(dataProductBascket);
-     updateProductBasket(dataProductBascket)
+      updateProductBasket(dataProductBascket);
     } catch (err) {
       console.log(err);
     }
   };
 
-  
-
   return (
     <>
-      <div class="album py-5 bg-body-tertiary">
+      <div className="album py-5 bg-body-tertiary">
         <div className="container">
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {isLoading && <Spinners />}
-            {!isLoading &&
-              data &&
-              data.product.map((element) => {
-                return (
-                  <div className="col">
+            {loading && <Spinners />}
+            {!loading &&
+              (productSearch || product ? (
+                (productSearch || product.product).map((element) => (
+                  <div className="col" key={nanoid()}>
                     <CardProduct
-                      key={nanoid()}
                       description={element.description}
                       price={element.price}
                       image={element.image}
@@ -49,12 +41,14 @@ function MainCard() {
                       onAddProductBasket={() => addBasketProduct(element._id)}
                     />
                   </div>
-                );
-              })}
+                ))
+              ) : (
+                <h3>Nessun Prodotto trovato</h3>
+              ))}
           </div>
         </div>
       </div>
-      
+      {modalBasket && <ModalBasket message={"Prodotto aggiunto"} />}
     </>
   );
 }

@@ -1,0 +1,19 @@
+.my-position{
+    position: aboslute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+.my-title{
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color:white
+}
+
+
+.my-h{
+    height: 400px;
+}
