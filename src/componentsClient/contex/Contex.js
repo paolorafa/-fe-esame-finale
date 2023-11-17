@@ -28,7 +28,7 @@ export const ElementContex = ({ children }) => {
     setModalBasket(true)
     setTimeout(() => {
       setModalBasket(false)
-    }, 3000)
+    }, 2000)
   }
 
 
@@ -48,7 +48,6 @@ export const ElementContex = ({ children }) => {
   }
 
 
-console.log(product);
 
   useEffect(() => {
 

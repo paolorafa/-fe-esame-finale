@@ -15,6 +15,7 @@ import InfoClient from './pages/infoclient/InfoClient'
 import PageLoginClient from './pages/PageLoginClient'
 import PageForCategory from './pages/PageForCategory'
 import PageProductDetail from './pages/PageProductDetail'
+import Pay from './componentsClient/gotopay/Pay'
 
 
 function App() {
@@ -26,19 +27,19 @@ function App() {
           <Route path='/client/create' element={<RegisterCLient />} />
           <Route path='/success/:token' element={<LoginSucces />} />
           <Route path="/client/login" element={<PageLoginClient />} />
-          <Route path="/providers/create" element={<RegisterDeveloper />} />
+          <Route path='/basket/pay' element={<Pay />} />
           <Route path="/home/client" element={<HomeClient />} />
-          <Route path="/category/:id/:category" element={<PageForCategory />}/>
-          <Route path="/products/:product_id" element={<PageProductDetail/>}/>
+          <Route path="/category/:id/:category" element={<PageForCategory />} />
+          <Route path="/products/:product_id" element={<PageProductDetail />} />
           <Route path='/basket' element={<BasketPage />} />
-          <Route path="/products/update/:id" element={<ModificaProduct />}/>
+          <Route path="/products/update/:id" element={<ModificaProduct />} />
           <Route path="/infoclient" element={<InfoClient />} />
 
 
           <Route element={<ProtecetedRouters />} >
             <Route path='/home/developer' element={<HomeDeveloper />} />
             <Route path='/category' element={<LayoutCatecory />} />
-
+            <Route path="/providers/create" element={<RegisterDeveloper />} />
 
           </Route>
 

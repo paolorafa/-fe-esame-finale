@@ -2,13 +2,14 @@ import React, { useEffect, useState, useContext } from "react";
 import { nanoid } from "nanoid";
 import TableBasket from "../tableBasket/TableBasket";
 import { ContextElement } from "../contex/Contex";
+import { Link } from "react-router-dom";
+import Button from "react-bootstrap/esm/Button";
 
 
 function Basket() {
   const [carrello, setCarrello] = useState(null);
   const { count, setCount } = useContext(ContextElement);
   
-console.log(count);
   const rimuoviProdotto = async (index) => {
     try {
       
@@ -18,6 +19,7 @@ console.log(count);
 
       nuovoCarrello.splice(index, 1);
       setCarrello(nuovoCarrello);
+      setCount(count)
       
 
       localStorage.setItem("basket", JSON.stringify(nuovoCarrello));
@@ -32,7 +34,7 @@ console.log(count);
     if (storeBasket) {
       const basket = JSON.parse(storeBasket);
       setCarrello([...basket]);
-      console.log(basket);
+     
     }
   }, []);
 
@@ -81,7 +83,11 @@ console.log(count);
                 </p>
               </div>
               <div class="mt-3">
-              <a href="#" class="btn btn-success w-100 shadow-0 mb-2"> Acquista </a>
+                <Button className="btn btn-success w-100 shadow-0 mb-2">
+                  <Link to={'/basket/pay'} className="text-white " style={{ textDecoration: "none" }}>Acquista</Link> 
+                </Button>
+                
+              
               
             </div>
             </div>

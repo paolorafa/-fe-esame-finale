@@ -1,18 +1,17 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import CardProduct from "../cardProduct/CardProduct";
 import { nanoid } from "nanoid";
 import { ContextElement } from "../contex/Contex";
 import ModalBasket from "../modal/Modal";
 import "./mainCard.css";
 import Carousel from "react-bootstrap/Carousel";
-import Button from "react-bootstrap/esm/Button";
-import { Link } from "react-router-dom";
+
 
 function MainCard() {
   const { updateProductBasket, product, productSearch, modalBasket } =
     useContext(ContextElement);
 
-  const [linkDeveloper, setLinkDeveloper] = useState(false);
+ 
 
   
   const addBasketProduct = async (_id) => {
@@ -39,12 +38,7 @@ function MainCard() {
     3
   );
 
-  useEffect(() => {
-    const tokenInfo = localStorage.getItem("userToken");
-    if (tokenInfo) {
-      setLinkDeveloper(true);
-    }
-  }, []);
+ 
 
   return (
     <>
@@ -105,11 +99,7 @@ function MainCard() {
         </div>
       </div>
       {modalBasket && <ModalBasket message={"Prodotto aggiunto"} />}
-      {linkDeveloper && (
-        <Button>
-          <Link to={"/home/developer"}></Link>Inserisci i prodotti
-        </Button>
-      )}
+      
     </>
   );
 }

@@ -5,12 +5,14 @@ import { jwtDecode } from "jwt-decode";
 import { ContextElement } from "../contex/Contex";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
+import Button from "react-bootstrap/esm/Button";
 
 function Navigation() {
   const { setProductSearch, product } = useContext(ContextElement);
 
   const [input, setInput] = useState({ search: "" });
   const [showInfo, setShowInfo] = useState(false);
+  const [linkDeveloper, setLinkDeveloper] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -44,16 +46,21 @@ function Navigation() {
 
   useEffect(() => {
     const tokenStorage = localStorage.getItem("userTokenClient");
+    const tokenDeveloper = localStorage.getItem("userToken");
+    if (tokenDeveloper) {
+      setLinkDeveloper(true);
+    }
+
     setToken(tokenStorage);
     if (tokenStorage) {
       const decodeToken = jwtDecode(tokenStorage);
 
       const image = decodeToken.image;
       const provider = decodeToken.provider;
-     
+
       if (provider) {
         setShowInfo(false);
-      } else{
+      } else {
         setShowInfo(true);
       }
       setImageUrl(image);
@@ -75,25 +82,51 @@ function Navigation() {
               </div>
 
               <div className="order-lg-last col-lg-2 col-sm-8 col-6 d-flex justify-content-center gap-2 align-items-center">
-                <div className="d-flex float-end">
-                  <div className="my-login">
+                <div className="d-flex float-end gap-2 justify-content-center align-items-center">
+                  <div className="my-login d-flex align-items-center">
                     <Link to={"/client/login"} className="text-black">
-                      <img src={imageUrl} alt=" login" /> LogIn
+                      <img
+                        src={imageUrl}
+                        style={{ textDecoration: "none" }}
+                        alt=""
+                      />{" "}
+                      LogIn
                     </Link>
+                  </div>
+                  <div>
+                    {linkDeveloper && (
+                      <Button>
+                        <Link
+                          to={"/home/developer"}
+                          className="text-white"
+                          style={{ textDecoration: "none" }}
+                        >
+                          Inserisci i prodotti
+                        </Link>
+                      </Button>
+                    )}
                   </div>
                 </div>
                 {showInfo && (
                   <DropdownButton id="dropdown-basic-button">
                     <Dropdown.Item href="#/action-2">
-                      <Link to={"/infoclient"}> Informazioni</Link>
+                      <Button>
+                        <Link
+                          to={"/infoclient"}
+                          style={{ textDecoration: "none" }}
+                        >
+                          {" "}
+                          Informazioni
+                        </Link>
+                      </Button>
                     </Dropdown.Item>
                     <Dropdown.Item href="#/action-2">
-                      <button
-                        className="text-black btn btn-primary "
+                      <Button
+                        className="text-black btn btn-outline-danger "
                         onClick={handleLogout}
                       >
                         LogOut
-                      </button>
+                      </Button>
                     </Dropdown.Item>
                   </DropdownButton>
                 )}
