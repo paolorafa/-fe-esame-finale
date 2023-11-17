@@ -35,11 +35,11 @@ function App() {
           <Route path="/products/update/:id" element={<ModificaProduct />} />
           <Route path="/infoclient" element={<InfoClient />} />
 
-
+          <Route path="/providers/create" element={<RegisterDeveloper />} />
           <Route element={<ProtecetedRouters />} >
             <Route path='/home/developer' element={<HomeDeveloper />} />
             <Route path='/category' element={<LayoutCatecory />} />
-            <Route path="/providers/create" element={<RegisterDeveloper />} />
+
 
           </Route>
 
