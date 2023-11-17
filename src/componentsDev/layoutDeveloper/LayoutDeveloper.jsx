@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./layout.css";
 import FormCreateCard from "../formCreateTable/FormCreateTable";
 import TableForProduct from "../table/TableForProduct";
@@ -7,21 +7,17 @@ import Spinners from "react-bootstrap/esm/Spinner";
 import { nanoid } from "nanoid";
 import Sidebar from "../sidebar/Sidebar";
 import { useNavigate } from "react-router-dom";
-import ResponsivePagination from "react-responsive-pagination";
+
 
 function LayoutDeveloper() {
   const { data, isLoading } = useFetch(`${process.env.REACT_APP_URL}/products`);
-  const [currentPage, setCurrentPage] = useState(1);
-  const navigate = useNavigate();
   
+  const navigate = useNavigate();
 
   const handleSelectProductForEdit = (productId) => {
     navigate(`/products/update/${productId}`);
   };
 
-  const hadlePagination = (value) => {
-    setCurrentPage(value);
-  };
 
   const delectProduct = async (_id) => {
     try {
@@ -35,7 +31,8 @@ function LayoutDeveloper() {
         }
       );
       if (response && response.ok) {
-        await data;
+        window.location.reload();
+        return data
       }
     } catch (err) {
       console.log(err);
@@ -45,27 +42,28 @@ function LayoutDeveloper() {
   return (
     <>
       <header
-        className="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow"
+        className="navbar  bg-dark flex-md-nowrap  shadow"
         data-bs-theme="dark"
       >
-        <h1 className="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white">
+        <h1 className="navbar-brand col-md col-lg-2 fs-6  text-white">
           DuotoneEcommerce
         </h1>
+        <div className=" text-white my-login-dev "></div>
       </header>
       <section className="container-fluid ">
         <div className="row">
           <div className="col-md-3">
-            <Sidebar text="categoria" url="/category" />
+            <Sidebar text="categoria" />
           </div>
 
-          <div className=" col-md-9 ms-sm-auto  px-md-4 ">
+          <div className=" col-md-12 ms-sm-auto px-md-4 ">
             <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
               <h1 className="h2">Dashboard</h1>
             </div>
             <FormCreateCard />
             {isLoading && <Spinners />}
             {!isLoading &&
-              data &&
+              data && data.product &&
               data.product.map((element) => {
                 return (
                   <TableForProduct
@@ -82,13 +80,10 @@ function LayoutDeveloper() {
                     }
                   />
                 );
+                
               })}
           </div>
-          <ResponsivePagination
-            current={currentPage}
-            total={data && data.totalPage}
-            onPageChange={hadlePagination}
-          />
+          
         </div>
       </section>
     </>

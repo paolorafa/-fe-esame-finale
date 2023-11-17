@@ -1,56 +1,63 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BsBasket } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
+import { ContextElement } from "../contex/Contex";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import { nanoid } from "nanoid";
 
 function NavLink() {
+  const { count } = useContext(ContextElement);
 
   const { data } = useFetch(`${process.env.REACT_APP_URL}/category`);
 
   return (
     <>
-      <nav
-        className="navbar navbar-expand-md bg-dark sticky-top border-bottom z-0 "
+      <Navbar
+        expand="lg"
+        className="bg-dark sticky-top border-bottom z-0"
         data-bs-theme="dark"
       >
-        <div className="container">
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNavDropdown">
-            <div className="offcanvas-body">
-              <ul className="navbar-nav flex-grow-1 justify-content-center">
-                <li className="nav-item">
-                  <a className="nav-link" href={`/home/client`}>
-                    Home
+        <Container>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              <a
+                className="nav-link text-white"
+                href={`/home/client`}
+                style={{ fontSize: "1rem" }}
+              >
+                Home
+              </a>
+              {data &&
+                data.category.map((element) => (
+                  <a
+                    className="nav-link text-white "
+                    key={nanoid()}
+                    href={`/category/${element._id}/${element.category}`}
+                  >
+                    {element.category}
                   </a>
-                </li>
-                <li className="nav-item d-flex">
-                  {data &&
-                    data.category.map((element) => (
-                      <a className="nav-link" href={`/category/${element._id}/${element.category}`}>
-                        {element.category}
-                      </a>
-                    ))}
-                </li>
-              </ul>
+                ))}
+            </Nav>
+            <div className="text-white d-flex justify-content-end">
+              <div>
+                <Link
+                  to="/basket"
+                  className="text-white"
+                  style={{ fontSize: "2rem", textDecoration: "none" }}
+                >
+                  <BsBasket />
+                </Link>
+              </div>
+
+              <div>{count}</div>
             </div>
-          </div>
-          <div className="text-white">
-            <Link to={"/basket"} className="text-white">
-              <BsBasket />
-            </Link>
-          </div>
-        </div>
-      </nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
     </>
   );
 }

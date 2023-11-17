@@ -38,7 +38,7 @@ function LoginClient() {
         const data = await response.json();
           
         if (data.token) {
-          localStorage.setItem("userToken", data.token);
+          localStorage.setItem("userTokenClient", data.token);
           navigate("/home/client");
          
         } else if(data.error){
@@ -126,6 +126,16 @@ function LoginClient() {
                           </button>
                         </div>
                       </form>
+
+                      <div className='d-flex align-items-center justify-content-center pb-4'>
+                      <button
+                          
+                          type="button"
+                          className="btn btn-outline-danger"
+                        >
+                           <Link to="/home/developer">Se Sei un Fornitore Registrati</Link>
+                        </button>
+                      </div>
                       {modalBasket && <Modal message={'login o password errati'}/>}
                      
                     </div>

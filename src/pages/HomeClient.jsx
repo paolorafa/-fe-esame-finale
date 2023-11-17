@@ -4,6 +4,7 @@ import NavLink from "../componentsClient/navLink/NavLink";
 import Jumbotron from "../componentsClient/jumbotron/Jumbotron";
 import MainCard from "../componentsClient/mainCard/MainCard";
 import Footer from "../componentsClient/footerEcommerce/Footer";
+import Video from "../componentsClient/video/Video";
 import { ElementContex } from "../componentsClient/contex/Contex";
 
 
@@ -15,7 +16,8 @@ function HomeClient() {
           <Navigation />
           <NavLink />
           <Jumbotron />
-          <MainCard />
+          <MainCard/>
+          <Video/>
           <Footer />
         </ElementContex>
      

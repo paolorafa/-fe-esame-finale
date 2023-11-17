@@ -1,35 +1,34 @@
-import React, {useContext, useEffect} from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Spinner from "react-bootstrap/esm/Spinner";
-import { ContextElement } from "../componentsClient/contex/Contex";
+import { useFetch } from "../../hooks/useFetch";
+import ModalComment from "../commentArea/ModalComment";
+import TextAreaComment from "../commentArea/TextAreaComment";
+
+function PoductPage() {
+  const { product_id } = useParams();
+  const [productId, setProductId] = useState(null);
+ 
+
+  const { data, isLoading } = useFetch(
+    `${process.env.REACT_APP_URL}/products/${productId}`
+  );
 
 
-function ProductDetails() {
-  const { id } = useParams();
-console.log(id);
-  
-  const { setId, loading, product} =
-  useContext(ContextElement);
-  console.log(product);
-
-  
   useEffect(() => {
-    // Chiamare setId con l'ID ottenuto dai parametri
-    setId(id);
-  }, [setId, id]);
-
+    setProductId(product_id);
+  }, [product_id]);
   return (
     <>
-    
       <section className="py-5">
         <div className="container">
           <div className="row gx-5">
+            {isLoading && <Spinner />}
             <div className="col-lg-6">
-              {loading && <Spinner />}
-              {!loading  && product && (
+              {!isLoading && data && data.product && (
                 <div className="border rounded-4 mb-3 d-flex justify-content-center">
                   <img
-                    src={product.product.image}
+                    src={data.product.image}
                     alt=""
                     style={{
                       maxWidth: "100%",
@@ -43,9 +42,12 @@ console.log(id);
 
             <main className="col-lg-6">
               <div className="ps-lg-3">
-                <h4 className="title text-dark">
-                  {!loading && product ? product.product.nameProduct : ""}
-                </h4>
+                {!isLoading && data && data.product && (
+                  <h4 className="title text-dark">
+                    {data.product.nameProduct};
+                  </h4>
+                )}
+
                 <div className="d-flex flex-row my-3">
                   <div className="text-warning mb-1 me-2">
                     <i className="fa fa-star"></i>
@@ -61,22 +63,28 @@ console.log(id);
                   </span>
                 </div>
                 <div class="mb-3">
-                  <span class="h2">
-                    €{!loading && product ? product.product.price : ""}
-                  </span>
+                  €
+                  {!isLoading && data && data.product && (
+                    <span class="h2">{data.product.price}</span>
+                  )}
                 </div>
-                <p className="h3">{!loading && product ? product.product.description : ""}</p>
+
+                {!isLoading && data && data.product && (
+                  <p className="h3">{data.product.description}</p>
+                )}
+              </div>
+
+              <div>
+                <TextAreaComment productId={product_id}/>
+
+                <ModalComment productId={product_id} />
               </div>
             </main>
           </div>
         </div>
       </section>
-     
-     
- 
-      
     </>
   );
 }
 
-export default ProductDetails;
+export default PoductPage;

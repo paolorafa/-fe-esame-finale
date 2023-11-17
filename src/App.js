@@ -10,12 +10,12 @@ import ProtecetedRouters from './middlewars/ProtectedRoutes'
 import ModificaProduct from './pages/ModificaProduct'
 import { LoginSucces } from './pages/LoginSucces'
 import RegisterCLient from './pages/RegisterCLient'
-import ProductDetails from './pages/ProductDetails'
 import BasketPage from './pages/BasketPage'
 import InfoClient from './pages/infoclient/InfoClient'
 import PageLoginClient from './pages/PageLoginClient'
 import PageForCategory from './pages/PageForCategory'
 import PageProductDetail from './pages/PageProductDetail'
+
 
 function App() {
   return (
@@ -28,15 +28,15 @@ function App() {
           <Route path="/client/login" element={<PageLoginClient />} />
           <Route path="/providers/create" element={<RegisterDeveloper />} />
           <Route path="/home/client" element={<HomeClient />} />
-          <Route path="/category/:id/:category" element={<PageForCategory />}></Route>
-          <Route path='/products/:id' element={<PageProductDetail />} />
+          <Route path="/category/:id/:category" element={<PageForCategory />}/>
+          <Route path="/products/:product_id" element={<PageProductDetail/>}/>
           <Route path='/basket' element={<BasketPage />} />
-          <Route path="/products/update/:id" element={<ModificaProduct />}></Route>
+          <Route path="/products/update/:id" element={<ModificaProduct />}/>
           <Route path="/infoclient" element={<InfoClient />} />
 
 
           <Route element={<ProtecetedRouters />} >
-            <Route path='/home' element={<HomeDeveloper />} />
+            <Route path='/home/developer' element={<HomeDeveloper />} />
             <Route path='/category' element={<LayoutCatecory />} />
 
 

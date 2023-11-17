@@ -12,7 +12,7 @@ export const LoginSucces = () => {
       
         if(token){
             localStorage.setItem('userToken', token);
-        navigate('/home') 
+        navigate('/home/developer') 
         }
        
       }, [token]);

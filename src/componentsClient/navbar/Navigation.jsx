@@ -21,10 +21,10 @@ function Navigation() {
     });
   };
 
-  const handleLogout = () =>{
-    localStorage.clear('userToken')
-    window.location.href = '/home/client';
-  }
+  const handleLogout = () => {
+    localStorage.clear("userToken");
+    window.location.href = "/home/client";
+  };
 
   const searchInput = (e) => {
     e.preventDefault();
@@ -32,8 +32,10 @@ function Navigation() {
       const searchResult = product.product.filter((element) =>
         element.nameProduct.toLowerCase().includes(input.search.toLowerCase())
       );
-      console.log(searchResult);
+
       setProductSearch(searchResult);
+    } else {
+      setProductSearch(product && product.product);
     }
   };
 
@@ -41,14 +43,20 @@ function Navigation() {
   const [token, setToken] = useState("");
 
   useEffect(() => {
-    const tokenStorage = localStorage.getItem("userToken");
+    const tokenStorage = localStorage.getItem("userTokenClient");
     setToken(tokenStorage);
     if (tokenStorage) {
       const decodeToken = jwtDecode(tokenStorage);
 
       const image = decodeToken.image;
+      const provider = decodeToken.provider;
+     
+      if (provider) {
+        setShowInfo(false);
+      } else{
+        setShowInfo(true);
+      }
       setImageUrl(image);
-      setShowInfo(true);
     }
   }, [token, showInfo]);
 
@@ -73,7 +81,6 @@ function Navigation() {
                       <img src={imageUrl} alt=" login" /> LogIn
                     </Link>
                   </div>
-                  
                 </div>
                 {showInfo && (
                   <DropdownButton id="dropdown-basic-button">
@@ -81,9 +88,12 @@ function Navigation() {
                       <Link to={"/infoclient"}> Informazioni</Link>
                     </Dropdown.Item>
                     <Dropdown.Item href="#/action-2">
-                    <button  className="text-black btn btn-primary " onClick={handleLogout}>
-                      LogOut
-                    </button>
+                      <button
+                        className="text-black btn btn-primary "
+                        onClick={handleLogout}
+                      >
+                        LogOut
+                      </button>
                     </Dropdown.Item>
                   </DropdownButton>
                 )}

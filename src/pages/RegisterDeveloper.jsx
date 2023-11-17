@@ -30,7 +30,7 @@ function RegisterDeveloper() {
           localStorage.setItem("userToken", data.token);
           console.log("userToken impostato:", data.token);
         }
-        navigate("/home");
+        navigate("/home/developer");
       }
     } catch (error) {
       console.log(e);

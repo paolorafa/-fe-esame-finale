@@ -116,19 +116,20 @@ function ModificaProduct() {
   return (
     <>
       <header
-        className="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow"
+        className="navbar  bg-dark flex-md-nowrap  shadow"
         data-bs-theme="dark"
       >
-        <h1 className="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white">
+        <h1 className="navbar-brand col-md col-lg-2 fs-6  text-white">
           DuotoneEcommerce
         </h1>
+        <div className=" text-white my-login-dev "></div>
       </header>
       <section className="container-fluid ">
         <div className="row">
-          <div className="col-md-3">
-            <Sidebar text="prodotti" url="/home" />
+        <div className="col-md-3">
+            <Sidebar/>
           </div>
-          <div className=" col-md-9 ms-sm-auto  px-md-4 ">
+          <div className=" col-md-12 ms-sm-auto px-md-4  ">
             <form enctype="multipart/form-data" onSubmit={onSubmit}>
               <Row className="mb-3">
                 <Form.Label className="fw-bolder">Nome Prodotto</Form.Label>

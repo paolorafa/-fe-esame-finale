@@ -1,18 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { nanoid } from "nanoid";
 import TableBasket from "../tableBasket/TableBasket";
+import { ContextElement } from "../contex/Contex";
+
 
 function Basket() {
   const [carrello, setCarrello] = useState(null);
-
-  const rimuoviProdotto = async (productId) => {
+  const { count, setCount } = useContext(ContextElement);
+  
+console.log(count);
+  const rimuoviProdotto = async (index) => {
     try {
       
-      const nuovoCarrello = carrello.filter(
-        (item) => item.product._id !== productId
-      );
+      const nuovoCarrello = [...carrello]
+      
+      console.log(nuovoCarrello);
 
+      nuovoCarrello.splice(index, 1);
       setCarrello(nuovoCarrello);
+      
 
       localStorage.setItem("basket", JSON.stringify(nuovoCarrello));
     } catch (error) {
@@ -25,7 +31,8 @@ function Basket() {
 
     if (storeBasket) {
       const basket = JSON.parse(storeBasket);
-      setCarrello(basket);
+      setCarrello([...basket]);
+      console.log(basket);
     }
   }, []);
 
@@ -50,7 +57,7 @@ function Basket() {
                               price={element.product.price}
                               image={element.product.image}
                               onDeleteProduct={() =>
-                                rimuoviProdotto(element.product._id)
+                                rimuoviProdotto(element.index)
                               }
                             />
                           );
@@ -63,8 +70,8 @@ function Basket() {
 
             <div class="col-lg-3">
               <div class="d-flex justify-content-between">
-                <p class="mb-2">Total price:</p>
-                <p class="mb-2">
+                <h3 class="mb-2">Total price:</h3>
+                <p class="mb-2" style={{fontSize:'25px'}}>
                   €
                   {carrello &&
                     carrello
@@ -73,6 +80,10 @@ function Basket() {
                       .toFixed(2)}
                 </p>
               </div>
+              <div class="mt-3">
+              <a href="#" class="btn btn-success w-100 shadow-0 mb-2"> Acquista </a>
+              
+            </div>
             </div>
           </div>
         </div>
